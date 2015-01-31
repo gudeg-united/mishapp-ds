@@ -19,3 +19,5 @@ class BmkgItem(scrapy.Item):
     magnitudo = scrapy.Field()
 
     depth = scrapy.Field()
+
+    type = scrapy.Field()
