@@ -76,14 +76,14 @@ class BmkgSpider(scrapy.Spider):
 
 
 # lat lon regex format for earthquake datasource
-eq_latlon_re = re.compile(r"(?P<lat>.+) L[B|S] (?P<lon>.+) B[B|T]")
+eq_latlon_re = re.compile(r"(?P<lat>.+) L[U|S] (?P<lon>.+) B[B|T]")
 
 
 def earthquake_latlon(value):
     """Gets latitude and longitude from a string.
 
     :param value: Latlon string, for example `3.24 LS 128.96 BT`.
-    :returns: A tuple of lat and lon.
+    :returns: A tuple of lat and lon strings.
     """
     lat, lon = "", ""
     rgx = eq_latlon_re.match(value)
