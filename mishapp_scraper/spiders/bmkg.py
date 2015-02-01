@@ -4,7 +4,6 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 
-import os
 import re
 
 import scrapy
@@ -13,25 +12,18 @@ from mishapp_scraper.items import BmkgItem
 from mishapp_scraper.loaders import BmkgEarthquakeItemLoader
 from mishapp_scraper.loaders import BmkgTsunamiItemLoader
 
-# BMKG domain name
-BMKG_DOMAIN = os.environ.get("BMKG_DOMAIN", "bmkg.go.id")
-
 # URL to BMKG page where earthquake data reside
-BMKG_EARTHQUAKE_URL = os.environ.get(
-    "BMKG_EARTHQUAKE_URL",
-    "http://bmkg.go.id/BMKG_Pusat/Gempabumi_-_Tsunami/Gempabumi/Gempabumi_Dirasakan.bmkg",  # noqa
-    )
+BMKG_EARTHQUAKE_URL = "http://bmkg.go.id/BMKG_Pusat" \
+                      "/Gempabumi_-_Tsunami/Gempabumi/Gempabumi_Dirasakan.bmkg"
 
 # URL to BMKG page where tsunami data reside
-BMKG_TSUNAMI_URL = os.environ.get(
-    "BMKG_TSUNAMI_URL",
-    "http://bmkg.go.id/BMKG_Pusat/Gempabumi_-_Tsunami/Tsunami.bmkg",
-    )
+BMKG_TSUNAMI_URL = "http://bmkg.go.id/BMKG_Pusat" \
+                   "/Gempabumi_-_Tsunami/Tsunami.bmkg"
 
 
 class BmkgSpider(scrapy.Spider):
     name = "bmkg"
-    allowed_domains = [BMKG_DOMAIN]
+    allowed_domains = ["bmkg.go.id"]
     start_urls = [BMKG_TSUNAMI_URL, BMKG_EARTHQUAKE_URL]
 
     def parse(self, response):
