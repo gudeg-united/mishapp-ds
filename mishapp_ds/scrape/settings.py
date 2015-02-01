@@ -4,8 +4,6 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 
-import os
-
 BOT_NAME = 'mishapp_ds'
 SPIDER_MODULES = ['mishapp_ds.scrape.spiders']
 NEWSPIDER_MODULE = 'mishapp_ds.scrape.spiders'
@@ -19,5 +17,5 @@ DOWNLOADER_MIDDLEWARES = {
     "scrapy.contrib.downloadermiddleware.httpcache.HttpCacheMiddleware": 950,
 }
 
-HTTPCACHE_ENABLED = os.environ.get("HTTPCACHE_ENABLED", True)
+HTTPCACHE_ENABLED = True
 HTTPCACHE_EXPIRATION_SECS = 60 * 30
