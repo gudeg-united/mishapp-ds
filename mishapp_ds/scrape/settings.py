@@ -6,13 +6,13 @@ from __future__ import unicode_literals
 
 import os
 
-BOT_NAME = 'mishapp_scraper'
-SPIDER_MODULES = ['mishapp_scraper.spiders']
-NEWSPIDER_MODULE = 'mishapp_scraper.spiders'
-USER_AGENT = 'mishapp_scraper (+http://mishapp.com)'
+BOT_NAME = 'mishapp_ds'
+SPIDER_MODULES = ['mishapp_ds.scrape.spiders']
+NEWSPIDER_MODULE = 'mishapp_ds.scrape.spiders'
+USER_AGENT = 'mishapp_ds (+http://mishapp.com)'
 
 ITEM_PIPELINES = {
-    "mishapp_scraper.pipelines.MongoPipeline": 20,
+    "mishapp_ds.scrape.pipelines.MongoPipeline": 20,
 }
 
 DOWNLOADER_MIDDLEWARES = {

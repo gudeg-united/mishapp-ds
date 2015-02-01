@@ -8,9 +8,9 @@ import re
 
 import scrapy
 
-from mishapp_scraper.items import BmkgItem
-from mishapp_scraper.loaders import BmkgEarthquakeItemLoader
-from mishapp_scraper.loaders import BmkgTsunamiItemLoader
+from mishapp_ds.scrape.items import BmkgItem
+from mishapp_ds.scrape.loaders import BmkgEarthquakeItemLoader
+from mishapp_ds.scrape.loaders import BmkgTsunamiItemLoader
 
 # URL to BMKG page where earthquake data reside
 BMKG_EARTHQUAKE_URL = "http://bmkg.go.id/BMKG_Pusat" \
