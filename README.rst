@@ -1,6 +1,6 @@
 mishapp-ds
 ~~~~~~~~~~
 
-.. image:: https://img.shields.io/codeship/afe6d520-8be3-0132-217e-328ae7f2fceb.svg?style=flat-square&label=codeship
+.. image:: https://img.shields.io/codeship/b08ec1b0-8dbb-0132-422a-669677a474c3.svg?style=flat-square&label=codeship
     :alt: Codeship status
-    :target: https://codeship.com/projects/60382
+    :target: https://codeship.com/projects/60754
