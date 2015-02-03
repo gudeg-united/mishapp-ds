@@ -40,7 +40,7 @@ class BmkgSpider(scrapy.Spider):
             # Common data are extracted using `.//td/text()`,
             # but date value is located under `td > a`,
             # hence we're adding `|.//td/a/text()` in xpath expression
-            # to correctly extract date as well.
+            # to extract date correctly.
             #
             # For example::
             #
@@ -55,7 +55,7 @@ class BmkgSpider(scrapy.Spider):
             loader.add_value("date_time", " ".join(cols[:2]))
             loader.add_value("lat", lat)
             loader.add_value("lon", lon)
-            loader.add_value("magnitudo", cols[3])
+            loader.add_value("magnitude", cols[3])
             loader.add_value("depth", cols[4])
             loader.add_value("type", "earthquake")
             yield loader.load_item()
@@ -69,7 +69,7 @@ class BmkgSpider(scrapy.Spider):
             loader.add_value("date_time", " ".join(cols[:2]))
             loader.add_value("lat", lat)
             loader.add_value("lon", lon)
-            loader.add_value("magnitudo", cols[3])
+            loader.add_value("magnitude", cols[3])
             loader.add_value("depth", cols[4])
             loader.add_value("type", "tsunami")
             yield loader.load_item()

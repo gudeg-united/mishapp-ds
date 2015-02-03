@@ -16,7 +16,7 @@ class BmkgItem(scrapy.Item):
     # `bujur`
     lon = scrapy.Field()
 
-    magnitudo = scrapy.Field()
+    magnitude = scrapy.Field()
 
     depth = scrapy.Field()
 
