@@ -26,6 +26,8 @@ class _DisasterItem(scrapy.Item):
     # longitude
     lon = scrapy.Field()
 
+    country = scrapy.Field()
+
 
 class BmkgItem(_DisasterItem):
     """This class represents desired data from BMKG.
@@ -41,3 +43,13 @@ class BmkgItem(_DisasterItem):
 
     # depth in Km
     depth = scrapy.Field()
+
+
+class GdacsItem(_DisasterItem):
+    # magnitude in M
+    magnitude = scrapy.Field()
+
+    # depth in Km
+    depth = scrapy.Field()
+
+    impact = scrapy.Field()
