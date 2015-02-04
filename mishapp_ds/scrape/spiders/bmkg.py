@@ -5,7 +5,7 @@ from __future__ import print_function
 from __future__ import unicode_literals
 
 from hashlib import md5
-import re
+# import re
 
 import scrapy
 
@@ -13,9 +13,10 @@ from mishapp_ds.scrape.items import BmkgItem
 from mishapp_ds.scrape.loaders import BmkgEarthquakeItemLoader
 from mishapp_ds.scrape.loaders import BmkgTsunamiItemLoader
 
-# URL to BMKG page where earthquake data reside
-BMKG_EARTHQUAKE_URL = "http://bmkg.go.id/BMKG_Pusat" \
-                      "/Gempabumi_-_Tsunami/Gempabumi/Gempabumi_Dirasakan.bmkg"
+# URL to BMKG page where latest earthquake data reside
+BMKG_EARTHQUAKE_URL = \
+    "http://bmkg.go.id/BMKG_Pusat" \
+    "/Gempabumi_-_Tsunami/Gempabumi/Gempabumi_Terkini.bmkg"
 
 # URL to BMKG page where tsunami data reside
 BMKG_TSUNAMI_URL = "http://bmkg.go.id/BMKG_Pusat" \
@@ -38,25 +39,13 @@ class BmkgSpider(scrapy.Spider):
 
     def parse_earthquake(self, response):
         for tr in iter(response.css("tbody tr")):
-            # Common data are extracted using `.//td/text()`,
-            # but date value is located under `td > a`,
-            # hence we're adding `|.//td/a/text()` in xpath expression
-            # to extract date correctly.
-            #
-            # For example::
-            #
-            #    <tr>
-            #        <td>118</td>
-            #        <td><a href="#">2000-01-02</a></td>
-            #    </tr>
             cols = tr.xpath(".//td/text()|.//td/a/text()").extract()[1:6]
-            lat, lon = earthquake_latlon(cols[2])
 
             loader = BmkgEarthquakeItemLoader(BmkgItem())
-            loader.add_value("date_time", " ".join(cols[:2]))
-            loader.add_value("lat", lat)
-            loader.add_value("lon", lon)
-            loader.add_value("magnitude", cols[3], re="(.+) SR")
+            loader.add_value("date_time", cols[0])
+            loader.add_value("lat", cols[1])
+            loader.add_value("lon", cols[2])
+            loader.add_value("magnitude", cols[3])
             loader.add_value("depth", cols[4], re="(.+) Km")
             loader.add_value("disaster_type", "earthquake")
             loader.add_value("source", self.name)
@@ -78,24 +67,6 @@ class BmkgSpider(scrapy.Spider):
             loader.add_value("source", self.name)
             loader.add_value("source_id", generate_source_id(loader))
             yield loader.load_item()
-
-
-# lat lon regex format for earthquake datasource
-eq_latlon_re = re.compile(r"(?P<lat>.+) L[U|S] (?P<lon>.+) B[B|T]")
-
-
-def earthquake_latlon(value):
-    """Gets latitude and longitude from a string.
-
-    :param value: Latlon string, for example `3.24 LS 128.96 BT`.
-    :returns: A tuple of lat and lon strings.
-    """
-    lat, lon = "", ""
-    rgx = eq_latlon_re.match(value)
-
-    if rgx:
-        lat, lon = rgx.groups()
-    return lat, lon
 
 
 def generate_source_id(loader):
