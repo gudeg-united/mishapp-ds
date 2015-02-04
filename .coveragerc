@@ -1,0 +1,5 @@
+[run]
+
+source = mishapp_ds
+omit =
+    mishapp_ds/scrape/settings.py
