@@ -30,5 +30,5 @@ class BmkgTsunamiItemLoader(BmkgItemLoaderBase):
 
 class BmkgEarthquakeItemLoader(BmkgItemLoaderBase):
     date_time_in = MapCompose(
-        partial(wib_to_utc, format_="DD/MM/YYYY HH:mm:ss Z"),
+        partial(wib_to_utc, format_="DD-MM-YYYY HH:mm:ss Z"),
         )
