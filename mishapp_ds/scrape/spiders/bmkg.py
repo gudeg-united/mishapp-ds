@@ -4,6 +4,7 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 
+from hashlib import md5
 import re
 
 import scrapy
@@ -55,9 +56,11 @@ class BmkgSpider(scrapy.Spider):
             loader.add_value("date_time", " ".join(cols[:2]))
             loader.add_value("lat", lat)
             loader.add_value("lon", lon)
-            loader.add_value("magnitude", cols[3])
-            loader.add_value("depth", cols[4])
-            loader.add_value("type", "earthquake")
+            loader.add_value("magnitude", cols[3], re="(.+) SR")
+            loader.add_value("depth", cols[4], re="(.+) Km")
+            loader.add_value("disaster_type", "earthquake")
+            loader.add_value("source", self.name)
+            loader.add_value("source_id", generate_source_id(loader))
             yield loader.load_item()
 
     def parse_tsunami(self, response):
@@ -69,9 +72,11 @@ class BmkgSpider(scrapy.Spider):
             loader.add_value("date_time", " ".join(cols[:2]))
             loader.add_value("lat", lat)
             loader.add_value("lon", lon)
-            loader.add_value("magnitude", cols[3])
-            loader.add_value("depth", cols[4])
-            loader.add_value("type", "tsunami")
+            loader.add_value("magnitude", cols[3], re="(.+) SR")
+            loader.add_value("depth", cols[4], re="(.+) Km")
+            loader.add_value("disaster_type", "tsunami")
+            loader.add_value("source", self.name)
+            loader.add_value("source_id", generate_source_id(loader))
             yield loader.load_item()
 
 
@@ -91,3 +96,13 @@ def earthquake_latlon(value):
     if rgx:
         lat, lon = rgx.groups()
     return lat, lon
+
+
+def generate_source_id(loader):
+    """Generates md5 hash from required item keys.
+    """
+    keys = ["date_time", "lat", "lon", "disaster_type"]
+    values = [loader.get_output_value(key) for key in keys]
+
+    assert all(values), "All required values are not loaded properly."
+    return md5("-".join(values)).hexdigest()
