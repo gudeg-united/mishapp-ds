@@ -42,6 +42,7 @@ class BmkgSpider(scrapy.Spider):
             cols = tr.xpath(".//td/text()|.//td/a/text()").extract()[1:6]
 
             loader = BmkgEarthquakeItemLoader(BmkgItem())
+            loader.add_value("country", "Indonesia")
             loader.add_value("date_time", cols[0])
             loader.add_value("lat", cols[1])
             loader.add_value("lon", cols[2])
@@ -58,6 +59,7 @@ class BmkgSpider(scrapy.Spider):
             lat, lon = cols[2].split(" - ")
 
             loader = BmkgTsunamiItemLoader(BmkgItem())
+            loader.add_value("country", "Indonesia")
             loader.add_value("date_time", " ".join(cols[:2]))
             loader.add_value("lat", lat)
             loader.add_value("lon", lon)
