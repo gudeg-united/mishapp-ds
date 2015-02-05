@@ -10,7 +10,7 @@ NEWSPIDER_MODULE = 'mishapp_ds.scrape.spiders'
 USER_AGENT = 'mishapp_ds (+http://mishapp.com)'
 
 ITEM_PIPELINES = {
-    "mishapp_ds.scrape.pipelines.MongoPipeline": 20,
+    "mishapp_ds.scrape.pipelines.RedisPubsubPipeline": 20,
 }
 
 DOWNLOADER_MIDDLEWARES = {
@@ -20,4 +20,4 @@ DOWNLOADER_MIDDLEWARES = {
 HTTPCACHE_ENABLED = True
 HTTPCACHE_EXPIRATION_SECS = 60 * 30
 
-MONGO_URI = "mongodb://localhost/mishapp"
+REDIS_URI = "redis://localhost/0"
