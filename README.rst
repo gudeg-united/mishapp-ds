@@ -38,7 +38,7 @@ Each spider fetches different disaster data. Common items are:
 ``date_time``
     Date and time (in UTC) when the disaster took place
 
-Each datum is published to a Redis channel called ``mishapp-disaster``,
+Each datum is published to a Redis channel called ``mishapp-datasource``,
 so any script which listens to this channel will be able to read the datum.
 Please note, the uniqueness of datum should be handled by consumer script.
 
