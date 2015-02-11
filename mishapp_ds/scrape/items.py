@@ -53,3 +53,5 @@ class GdacsItem(_DisasterItem):
     depth = scrapy.Field()
 
     impact = scrapy.Field()
+
+    date_time_end = scrapy.Field()

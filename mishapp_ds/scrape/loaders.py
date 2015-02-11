@@ -11,6 +11,7 @@ from scrapy.contrib.loader.processor import Join
 from scrapy.contrib.loader.processor import MapCompose
 from scrapy.contrib.loader.processor import Compose
 from scrapylib.processors import clean_spaces
+from scrapylib.processors import strip
 
 
 def datetime_to_utc(value, format_):
@@ -40,9 +41,11 @@ class BmkgEarthquakeItemLoader(BmkgItemLoaderBase):
         )
 
 
-class GdacsItemLoader(ItemLoader):
+class GdacsItemLoaderBase(ItemLoader):
     default_output_processor = Join()
 
+
+class GdacsEarthquakeItemLoader(GdacsItemLoaderBase):
     date_time_in = MapCompose(
         clean_spaces,
         lambda v: v.strip().replace("UTC", ""),
@@ -52,3 +55,16 @@ class GdacsItemLoader(ItemLoader):
         lambda v: " ".join(v),
         partial(datetime_to_utc, format_="DD MMM YYYY HH:mm"),
         )
+
+
+class GdacsFloodItemLoader(GdacsItemLoaderBase):
+    date_time_out = Compose(
+        lambda v: " ".join(v),
+        partial(datetime_to_utc, format_="DD MMM YYYY"),
+        )
+
+    date_time_end_out = date_time_out
+
+
+class GdacsCycloneItemLoader(GdacsItemLoaderBase):
+    country_in = MapCompose(clean_spaces, strip)
