@@ -15,14 +15,9 @@ from scrapylib.processors import strip
 
 
 def datetime_to_utc(value, format_):
-    value = value.replace("WIB", "+07:00")
     local = arrow.get(value, format_)
     utc = local.to("UTC")
     return str(utc)
-
-
-# backward-compat
-wib_to_utc = datetime_to_utc
 
 
 class BmkgItemLoaderBase(ItemLoader):
@@ -31,13 +26,15 @@ class BmkgItemLoaderBase(ItemLoader):
 
 class BmkgTsunamiItemLoader(BmkgItemLoaderBase):
     date_time_in = MapCompose(
-        partial(wib_to_utc, format_="DD-MMM-YY HH:mm:ss Z"),
+        lambda v: v.strip().replace("WIB", "+07:00"),
+        partial(datetime_to_utc, format_="DD-MMM-YY HH:mm:ss Z"),
         )
 
 
 class BmkgEarthquakeItemLoader(BmkgItemLoaderBase):
     date_time_in = MapCompose(
-        partial(wib_to_utc, format_="DD-MM-YYYY HH:mm:ss Z"),
+        lambda v: v.strip().replace("WIB", "+07:00"),
+        partial(datetime_to_utc, format_="DD-MM-YYYY HH:mm:ss Z"),
         )
 
 
