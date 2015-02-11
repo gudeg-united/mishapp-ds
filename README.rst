@@ -73,6 +73,7 @@ An example of datum emitted by this spider:
     {
         'country': 'Indonesia',
         'date_time': '2015-02-04T12:56:00+00:00',
+        'date_time_end': '2015-02-06T12:56:00+00:00',
         'depth': '588.53',
         'impact': '813467 people within 100km',
         'lat': '-06.16',
@@ -81,3 +82,5 @@ An example of datum emitted by this spider:
         'source': 'gdacs',
         'source_id': '1048014'
     }
+
+Note, ``date_time_end`` only appears in ``flood`` and ``cyclone`` events.
